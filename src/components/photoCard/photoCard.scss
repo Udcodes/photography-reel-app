@@ -1,0 +1,110 @@
+.photo-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  // grid-template-rows: repeat(auto-fit, minmax(1fr, 1fr));
+  grid-area: auto;
+  // display: flex;
+  position: relative;
+  gap: 2rem;
+
+  // column-count: 3;
+  // margin: 0 auto;
+  // width: 75%;
+  margin: 0 auto;
+  margin-top: -85px;
+  max-width: 850px;
+  padding: 3em;
+}
+
+.card {
+  // margin-bottom: 1rem;
+  grid-column: auto;
+  min-width: 200px;
+
+  // display: grid;
+  // width: 100%;
+  // height: 100%;
+  // grid-column: 1 / span 2;
+
+  // display: flex;
+  // position: relative;
+  // display: inline-block;
+  // overflow: hidden;
+  // display: grid;
+  // grid-template-columns: 1fr 1fr 1fr;
+  // grid-template-rows: auto;
+  // box-shadow: rgb(180, 169, 169);
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    transform: scale(1.1);
+    white-space: nowrap;
+    // opacity: 10;
+  }
+  &:hover .photo-details {
+    cursor: pointer;
+    // opacity: 0.5;
+    color: white;
+  }
+}
+
+.card--image {
+  // display: inline-block;
+  // grid-column: 1 / span 2;
+
+  // width: 100%;
+  // flex: 100%;
+  margin-top: 1rem;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: 0.25s ease-in-out;
+}
+.photo-details {
+  // display: inline-block;
+  // opacity: 0.5;
+  text-transform: capitalize;
+  color: rgb(250, 133, 37);
+  position: absolute;
+  padding: 15px;
+  margin: 5px;
+  margin-top: -100px;
+  // opacity: 0;
+  z-index: 1;
+  transition: 0.25 ease-in-out;
+  text-align: justify;
+  transform: scale(1.1);
+  font-size: 24px;
+
+  // color: white;
+}
+.photo-text {
+  text-align: justify;
+  color: white;
+  position: absolute;
+  padding: 15px;
+  margin: 5px;
+  margin-top: -70px;
+  // opacity: 0;
+  z-index: 1;
+  transition: 0.25 ease-in-out;
+  white-space: normal;
+}
+
+@media only screen and (max-width: 600px) {
+  // .photo-list {
+  //   margin-top: -70px;
+  // }
+  // .card-list {
+  //   column-count: 1;
+  // }
+}
+// @media (min-width: 550px) {
+//   .photo-list {
+//     grid-template-columns: repeat(2, 1fr);
+//   }
+// }
+// @media (min-width: 750px) {
+//   .photo-list {
+//     grid-template-columns: repeat(3, 1fr);
+//   }
+// }
