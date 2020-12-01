@@ -13,22 +13,22 @@ const App = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState({ id: '', user: null, urls: null });
   const [searchValue, setSearchValue] = useState('');
+  const [loadingSearchValue, setLoadingSearchValue] = useState(false);
   const skeletonLoaderArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   console.log(searchValue);
 
   const handleSearch = async (e) => {
     console.log(searchValue);
     e.preventDefault();
-    setDataLoading(true);
     await axios
       .get(
         `https://api.unsplash.com/search/photos/?query=${searchValue}&orientation=squarish&client_id=${API_KEY}`
       )
       .then((response) => {
-        console.log(response);
         if (response.status !== 200) {
           throw new Error('An error occurred with this request');
         }
+        setLoadingSearchValue(false);
         setImageData(response?.data.results);
         setDataLoading(false);
       })
@@ -36,10 +36,13 @@ const App = () => {
   };
   useEffect(() => {
     const fetchData = async () => {
+      setDataLoading(true);
+
       await axios
         .get(`${URL}photos${KEY}${PER_PAGE}&page=1`)
         .then((data) => {
           setImageData(data?.data);
+          setDataLoading(false);
         })
         .catch((err) => {
           return err.message;
@@ -53,7 +56,7 @@ const App = () => {
   return (
     <>
       <div className="App">
-        {searchValue !== '' && dataLoading ? (
+        {dataLoading ? (
           ((
             <SearchBar
               // value={searchValue}
@@ -72,10 +75,13 @@ const App = () => {
           <>
             <SearchBar
               value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
+              onChange={(e) => {
+                setSearchValue(e.target.value);
+                setLoadingSearchValue(true);
+              }}
               onSubmit={handleSearch}
-              // loading={}
-              // searchValue
+              loading={loadingSearchValue}
+              fetchingData={loadingSearchValue}
             />
             <div className="photo-list">
               {imageData &&
