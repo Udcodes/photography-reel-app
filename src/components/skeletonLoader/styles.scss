@@ -3,7 +3,7 @@
   animation: pulse 1.2s ease-in-out infinite;
   transition: 0.25s ease-in-out;
 }
-.skeleton-container {
+.skeleton {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-area: auto;
@@ -11,7 +11,6 @@
   border-radius: 5px;
   gap: 2rem;
   margin: -10px auto 40px auto;
-  // margin-top: -10px;
   max-width: 800px;
   width: 50%;
   height: 100%;
@@ -25,52 +24,39 @@
     }
   }
   @include commonAnimations();
-}
-.image-skeleton {
-  transition: 0.25s ease-in-out;
-  // height: 5616;
-  // width: 100%;
-  grid-column: auto;
-}
-.skeleton-line {
-  border-radius: 5px;
-  height: 5px;
-  color: black;
-  padding: 10px 20px 10px 20px;
-  // margin: 5px;
-  // margin-top: -90px;
-  // opacity: 0;
-  z-index: 1;
-  transition: 0.25 ease-in-out;
-  height: 0px;
-  width: 10em;
+  &-line {
+    border-radius: 5px;
+    height: 5px;
+    color: black;
+    padding: 10px 20px 10px 20px;
+    z-index: 1;
+    transition: 0.25 ease-in-out;
+    height: 0px;
+    width: 10em;
+    background: #eceaea;
 
-  // border: 3px solid black;
-  background: #eceaea;
-
-  &::before {
-    content: '\00a0';
+    &::before {
+      content: '\00a0';
+    }
   }
-}
-.skeleton-title {
-  padding: 10px;
-  // margin: 5px;
-  // margin-bottom: 2px;
-  // margin-top: -120px;
-  z-index: 1;
-  transition: 0.25 ease-in-out;
-  width: 8em;
-  border-radius: 5px;
-  height: 0px;
-  // border: 3px solid black;
-  background: #eceaea;
 
-  &::before {
-    content: '\00a0';
+  &-title {
+    padding: 10px;
+    z-index: 1;
+    transition: 0.25 ease-in-out;
+    width: 8em;
+    border-radius: 5px;
+    height: 0px;
+    background: #eceaea;
+
+    &::before {
+      content: '\00a0';
+    }
   }
-}
-.skeleton-details {
-  padding: 10px;
-  margin-top: 10rem;
-  position: absolute;
+
+  &-details {
+    padding: 10px;
+    margin-top: 10rem;
+    position: absolute;
+  }
 }

@@ -2,17 +2,14 @@
   text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.photo-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-area: auto;
+  position: relative;
+  gap: 2rem;
+  margin: 0 auto;
+  margin-top: -85px;
+  max-width: 850px;
+  padding: 3em;
 }
