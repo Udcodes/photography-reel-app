@@ -9,6 +9,7 @@ import { PER_PAGE, URL } from './config';
 
 const App = () => {
   const [imageData, setImageData] = useState(null);
+  const [error, setError] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState({ id: '', user: null, urls: null });
   const [searchValue, setSearchValue] = useState('');
@@ -22,7 +23,7 @@ const App = () => {
       const allResults = async () => {
         await axios
           .get(
-            `https://api.unsplash.com/search/photos/?query=${searchValue}&client_id=lSJ7Fn8U1hMGD0eXteNXDbOEPwXZ2-Ubg6h362tOpkc`
+            `https://api.unsplash.com/search/photos/?query=${searchValue}&orientation=portrait&client_id=lSJ7Fn8U1hMGD0eXteNXDbOEPwXZ2-Ubg6h362tOpkc`
           )
           .then((response) => {
             if (response.status !== 200) {
@@ -30,10 +31,10 @@ const App = () => {
             }
             setImageData(response?.data.results);
           })
-          .catch((error) => error.message);
+          .catch((error) => setError(error.message));
       };
       allResults();
-    }, 1500);
+    }, 500);
   };
 
   useEffect(() => {
@@ -46,9 +47,7 @@ const App = () => {
           .then((data) => {
             setImageData(data?.data);
           })
-          .catch((err) => {
-            return err.message;
-          });
+          .catch((err) => setError(err.message));
       };
       fetchData();
     }, 1500);
@@ -72,7 +71,8 @@ const App = () => {
             fetchingData={searchValue && loadingSearchValue}
           />
           <div className="photo-list">
-            {imageData &&
+            {!loadingSearchValue &&
+              imageData &&
               imageData.map(({ id, alt_description, user, urls }) => (
                 <PhotoCard
                   onClick={() => {

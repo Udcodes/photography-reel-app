@@ -32,7 +32,7 @@ export const SearchBar = ({ value, onChange, onSubmit, loading, fetchingData, ca
               )}
               {fetchingData && loading && (
                 <div className="search-results">
-                  <h1 className="search-title">{`Search results for "${value}"`}</h1>
+                  <h1 className="search-title">{`Search Results for "${value}"`}</h1>
                   <span role="button" className="cancel-search-btn" onClick={cancelSearch}>
                     x
                   </span>

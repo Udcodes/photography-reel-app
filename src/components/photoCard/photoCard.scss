@@ -5,10 +5,9 @@
 
   &:hover {
     transform: scale(1.1);
-    white-space: nowrap;
-  }
-  &:hover -details {
     cursor: pointer;
+  }
+  &:hover .card-details {
     color: white;
   }
 
@@ -20,7 +19,8 @@
   }
   &-details {
     text-transform: capitalize;
-    color: rgb(250, 133, 37);
+    color: rgb(231, 106, 3);
+    font-weight: bold;
     position: absolute;
     padding: 15px;
     margin: 5px;
@@ -29,7 +29,7 @@
     transition: 0.25 ease-in-out;
     text-align: justify;
     transform: scale(1.1);
-    font-size: 24px;
+    font-size: 1.5rem;
   }
 
   &-text {
@@ -41,6 +41,7 @@
     margin-top: -70px;
     z-index: 1;
     transition: 0.25 ease-in-out;
-    white-space: normal;
+    text-transform: capitalize;
+    transform: scale(1.1);
   }
 }
