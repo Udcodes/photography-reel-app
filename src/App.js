@@ -38,7 +38,7 @@ const App = () => {
     setTimeout(() => {
       const fetchData = async () => {
         await axios
-          .get(`${URL}${KEY}${PER_PAGE}&page=1`)
+          .get(`${URL}photos${KEY}${PER_PAGE}&page=1`)
           .then((data) => {
             setImageData(data?.data);
           })
