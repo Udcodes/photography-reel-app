@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import './App.css';
+import './app.scss';
 import Modal from './components/modal';
 import { PhotoCard } from './components/photoCard';
 import { SearchBar } from './components/searchBar';
@@ -30,10 +30,10 @@ const App = () => {
             }
             setImageData(response?.data.results);
           })
-          .catch((error) => console.log(error));
+          .catch((error) => error.message);
       };
       allResults();
-    }, 1000);
+    }, 1500);
   };
 
   useEffect(() => {
@@ -62,8 +62,6 @@ const App = () => {
             value={searchValue}
             onChange={(e) => {
               setSearchValue(e.target.value);
-              // setLoadingSearchValue(true);
-              // setFetchingData(true);
             }}
             onSubmit={handleSearch}
             loading={loadingSearchValue}
@@ -84,7 +82,7 @@ const App = () => {
                   key={id}
                   name={user?.name}
                   location={user?.location}
-                  image={urls.regular}
+                  image={urls?.regular}
                   description={alt_description}
                 />
               ))}
@@ -92,7 +90,7 @@ const App = () => {
           </div>
 
           <Modal
-            // id={id}
+            id={content?.id}
             isOpen={isOpen}
             closeModal={() => setIsOpen(false)}
             content={content}
