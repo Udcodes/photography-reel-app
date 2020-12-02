@@ -14,7 +14,7 @@ const App = () => {
   const [content, setContent] = useState({ id: '', user: null, urls: null });
   const [searchValue, setSearchValue] = useState('');
   const [loadingSearchValue, setLoadingSearchValue] = useState(false);
-  const [noResults, setNoResults] = useState(false);
+  const [noSearchResults, setNoSearchResults] = useState(false);
   const skeletonLoaderArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   const handleSearch = (e) => {
@@ -32,7 +32,7 @@ const App = () => {
             }
             setImageData(response?.data.results);
             if (response?.data.results.length === 0) {
-              setNoResults(true);
+              setNoSearchResults(true);
             }
           })
           .catch((error) => setError(error.message));
@@ -72,7 +72,9 @@ const App = () => {
             }}
             fetchingData={searchValue && loadingSearchValue}
           />
-          {noResults && <div>No results</div>}
+          {noSearchResults && (
+            <h2>There are no results for this search, please try another keyword.</h2>
+          )}
           <div className="photo-list">
             {!loadingSearchValue &&
               imageData &&
