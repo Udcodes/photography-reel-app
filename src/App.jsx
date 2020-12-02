@@ -72,6 +72,7 @@ const App = () => {
             }}
             fetchingData={searchValue && loadingSearchValue}
           />
+          {error && <h2>An error occurred, please refresh your browser.</h2>}
           {noSearchResults && (
             <h2>There are no results for this search, please try another keyword.</h2>
           )}
