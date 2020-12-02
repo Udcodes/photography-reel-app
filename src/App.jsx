@@ -5,7 +5,7 @@ import Modal from './components/modal';
 import { PhotoCard } from './components/photoCard';
 import { SearchBar } from './components/searchBar';
 import { SkeletonLoader } from './components/skeletonLoader';
-import { PER_PAGE, URL } from './config';
+import { API_KEY, PER_PAGE, URL } from './config';
 
 const App = () => {
   const [imageData, setImageData] = useState(null);
@@ -14,6 +14,7 @@ const App = () => {
   const [content, setContent] = useState({ id: '', user: null, urls: null });
   const [searchValue, setSearchValue] = useState('');
   const [loadingSearchValue, setLoadingSearchValue] = useState(false);
+  const [noResults, setNoResults] = useState(false);
   const skeletonLoaderArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   const handleSearch = (e) => {
@@ -30,6 +31,9 @@ const App = () => {
               throw new Error('An error occurred with this request');
             }
             setImageData(response?.data.results);
+            if (response?.data.results.length === 0) {
+              setNoResults(true);
+            }
           })
           .catch((error) => setError(error.message));
       };
@@ -41,9 +45,7 @@ const App = () => {
     setTimeout(() => {
       const fetchData = async () => {
         await axios
-          .get(
-            `${URL}photos?client_id=lSJ7Fn8U1hMGD0eXteNXDbOEPwXZ2-Ubg6h362tOpkc${PER_PAGE}&page=1`
-          )
+          .get(`${URL}photos?client_id=${API_KEY}${PER_PAGE}&page=1`)
           .then((data) => {
             setImageData(data?.data);
           })
@@ -70,6 +72,7 @@ const App = () => {
             }}
             fetchingData={searchValue && loadingSearchValue}
           />
+          {noResults && <div>No results</div>}
           <div className="photo-list">
             {!loadingSearchValue &&
               imageData &&
