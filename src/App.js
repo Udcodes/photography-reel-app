@@ -5,7 +5,7 @@ import Modal from './components/modal';
 import { PhotoCard } from './components/photoCard';
 import { SearchBar } from './components/searchBar';
 import { SkeletonLoader } from './components/skeletonLoader';
-import { API_KEY, KEY, PER_PAGE, URL } from './config';
+import { PER_PAGE, URL } from './config';
 
 const App = () => {
   const [imageData, setImageData] = useState(null);
@@ -21,7 +21,9 @@ const App = () => {
       setLoadingSearchValue(true);
       const allResults = async () => {
         await axios
-          .get(`https://api.unsplash.com/search/photos/?query=${searchValue}&client_id=${API_KEY}`)
+          .get(
+            `https://api.unsplash.com/search/photos/?query=${searchValue}&client_id=lSJ7Fn8U1hMGD0eXteNXDbOEPwXZ2-Ubg6h362tOpkc`
+          )
           .then((response) => {
             if (response.status !== 200) {
               throw new Error('An error occurred with this request');
@@ -38,7 +40,9 @@ const App = () => {
     setTimeout(() => {
       const fetchData = async () => {
         await axios
-          .get(`${URL}photos${KEY}${PER_PAGE}&page=1`)
+          .get(
+            `${URL}photos?client_id=lSJ7Fn8U1hMGD0eXteNXDbOEPwXZ2-Ubg6h362tOpkc${PER_PAGE}&page=1`
+          )
           .then((data) => {
             setImageData(data?.data);
           })
