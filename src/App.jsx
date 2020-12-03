@@ -78,7 +78,7 @@ const App = () => {
           <div className="photo-list">
             {data &&
               data
-                .filter(({ user, height }) => user?.location && height > 4000)
+                .filter(({ user }) => user?.location)
                 .map(({ id, alt_description, user, urls }) => (
                   <PhotoCard
                     onClick={() => {
@@ -92,8 +92,8 @@ const App = () => {
                     description={alt_description}
                   />
                 ))}
-            {error && <h2 style={{ marginTop: '40px' }}>{error}</h2>}
-            {noSearchResults && <h2 style={{ marginTop: '25%' }}>{noSearchResults}</h2>}
+            {error && <h3 style={{ marginTop: '10em' }}>{error}</h3>}
+            {noSearchResults && <h3 style={{ marginTop: '10em' }}>{noSearchResults}</h3>}
             {(isLoading || loadingSearchValue) &&
               skeletonLoaderArr.map((item, index) => <SkeletonLoader key={index} />)}
           </div>

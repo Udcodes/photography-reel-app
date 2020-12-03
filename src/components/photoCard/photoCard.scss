@@ -1,6 +1,5 @@
 .card {
   grid-column: auto;
-  min-width: 200px;
   box-shadow: 0 0px 0px rgba(0, 0, 0, 0.2);
 
   &:hover {
@@ -9,13 +8,20 @@
   }
   &:hover .card-details {
     color: white;
+    white-space: nowrap;
   }
 
   &-image {
+    width: 100%;
+    height: 400px;
     margin-top: 1rem;
     border-radius: 10px;
     margin-bottom: 10px;
     transition: 0.25s ease-in-out;
+    object-fit: cover;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
   &-details {
     text-transform: capitalize;
@@ -28,7 +34,8 @@
     transition: 0.25 ease-in-out;
     text-align: left;
     transform: scale(1.1);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 500;
   }
 
   &-text {
