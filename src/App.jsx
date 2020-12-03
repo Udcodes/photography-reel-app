@@ -23,41 +23,37 @@ const App = () => {
     e.preventDefault();
     setNoSearchResults(false);
     setLoadingSearchValue(true);
-    setTimeout(() => {
-      const allResults = async () => {
-        await axios
-          .get(`${SEARCH_BASE_URL}?query=${searchValue}&orientation=portrait&${KEY}`)
-          .then((response) => {
-            if (response.status !== 200) {
-              throw new Error('An error occurred with this request');
-            }
-            if (!response?.data?.results?.length) {
-              setNoSearchResults('No results for this search, please try another keyword.');
-            }
-            setSearchResults(response?.data);
-            setData(response?.data.results);
-            setLoadingSearchValue(false);
-          })
-          .catch((error) => setError('An error occurred, please refresh your browser.'));
-      };
-      allResults();
-    }, 500);
+    const allResults = async () => {
+      await axios
+        .get(`${SEARCH_BASE_URL}?query=${searchValue}&orientation=portrait&${KEY}`)
+        .then((response) => {
+          if (response.status !== 200) {
+            throw new Error('An error occurred with this request');
+          }
+          if (!response?.data?.results?.length) {
+            setNoSearchResults('No results for this search, please try another keyword.');
+          }
+          setSearchResults(response?.data);
+          setData(response?.data.results);
+          setLoadingSearchValue(false);
+        })
+        .catch((error) => setError('An error occurred, please refresh your browser.'));
+    };
+    allResults();
   };
 
   useEffect(() => {
     setIsLoading(true);
-    setTimeout(() => {
-      const fetchData = async () => {
-        await axios
-          .get(`${BASE_URL}photos?${KEY}${PER_PAGE}&page=1`)
-          .then((data) => {
-            setData(data?.data);
-            setIsLoading(false);
-          })
-          .catch((err) => setError('An error occurred, please refresh your browser.'));
-      };
-      fetchData();
-    }, 1000);
+    const fetchData = async () => {
+      await axios
+        .get(`${BASE_URL}photos?${KEY}${PER_PAGE}&page=1`)
+        .then((data) => {
+          setData(data?.data);
+          setIsLoading(false);
+        })
+        .catch((err) => setError('An error occurred, please refresh your browser.'));
+    };
+    fetchData();
   }, []);
 
   return (
