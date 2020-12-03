@@ -8,19 +8,21 @@ import { SkeletonLoader } from './components/skeletonLoader';
 import { BASE_URL, KEY, PER_PAGE, SEARCH_BASE_URL } from './config';
 
 const App = () => {
-  const [imageData, setImageData] = useState(null);
+  const [data, setData] = useState(null);
   const [error, setError] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState({ id: '', user: null, urls: null });
   const [searchValue, setSearchValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [loadingSearchValue, setLoadingSearchValue] = useState(false);
   const [noSearchResults, setNoSearchResults] = useState(false);
+  const [searchResults, setSearchResults] = useState(null);
   const skeletonLoaderArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   const handleSearch = (e) => {
     e.preventDefault();
+    setLoadingSearchValue(true);
     setTimeout(() => {
-      setLoadingSearchValue(true);
       const allResults = async () => {
         await axios
           .get(`${SEARCH_BASE_URL}?query=${searchValue}&orientation=portrait&${KEY}`)
@@ -31,26 +33,30 @@ const App = () => {
             if (response?.data.results.length === 0) {
               setNoSearchResults(true);
             }
-            setImageData(response?.data.results);
+            setSearchResults(response?.data.results.length);
+            setData(response?.data.results);
+            setLoadingSearchValue(false);
           })
-          .catch((error) => setError(error.message));
+          .catch((error) => setError('An error occurred, please refresh your browser.'));
       };
       allResults();
     }, 500);
   };
 
   useEffect(() => {
+    setIsLoading(true);
     setTimeout(() => {
       const fetchData = async () => {
         await axios
           .get(`${BASE_URL}photos?${KEY}${PER_PAGE}&page=1`)
           .then((data) => {
-            setImageData(data?.data);
+            setData(data?.data);
+            setIsLoading(false);
           })
-          .catch((err) => setError(err.message));
+          .catch((err) => setError('An error occurred, please refresh your browser.'));
       };
       fetchData();
-    }, 1500);
+    }, 1000);
   }, []);
 
   return (
@@ -63,18 +69,18 @@ const App = () => {
               setSearchValue(e.target.value);
             }}
             onSubmit={handleSearch}
-            loading={loadingSearchValue}
+            loading={isLoading}
             cancelSearch={() => {
               setLoadingSearchValue(false);
               setSearchValue('');
-              setNoSearchResults(false);
+              setSearchResults(null);
             }}
-            fetchingData={searchValue && loadingSearchValue}
+            fetchingData={loadingSearchValue}
+            searchResults={searchResults}
           />
           <div className="photo-list">
-            {!loadingSearchValue &&
-              imageData &&
-              imageData
+            {data &&
+              data
                 .filter(({ user, height }) => user?.location && height > 4000)
                 .map(({ id, alt_description, user, urls }) => (
                   <PhotoCard
@@ -89,15 +95,14 @@ const App = () => {
                     description={alt_description}
                   />
                 ))}
-            {error && (
-              <h2 style={{ marginTop: '40px' }}>An error occurred, please refresh your browser.</h2>
-            )}
+            {error && <h2 style={{ marginTop: '40px' }}>{error}</h2>}
             {noSearchResults && (
               <h2 style={{ marginTop: '40px' }}>
                 There are no results for this search, please try another keyword.
               </h2>
             )}
-            {!imageData && skeletonLoaderArr.map((item, index) => <SkeletonLoader key={index} />)}
+            {(isLoading || loadingSearchValue) &&
+              skeletonLoaderArr.map((item, index) => <SkeletonLoader key={index} />)}
           </div>
           <Modal
             id={content?.id}

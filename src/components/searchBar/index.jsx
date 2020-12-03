@@ -3,14 +3,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import './searchBar.scss';
 
-export const SearchBar = ({ value, onChange, onSubmit, loading, fetchingData, cancelSearch }) => {
+export const SearchBar = ({
+  value,
+  onChange,
+  onSubmit,
+  loading,
+  fetchingData,
+  cancelSearch,
+  searchResults,
+}) => {
+  console.log(fetchingData, 'hhhhhhh');
+  console.log(loading, fetchingData, 'fecthing dtsate');
   return (
     <>
       <form className="form" onSubmit={onSubmit}>
         <div className="search-header">
           <header className="search-container">
             <>
-              {!fetchingData && !loading && (
+              {(!loading || loading) && !fetchingData && !searchResults && (
                 <>
                   <FontAwesomeIcon icon={faSearch} className="search-icon" />
                   <input
@@ -25,12 +35,12 @@ export const SearchBar = ({ value, onChange, onSubmit, loading, fetchingData, ca
                   />
                 </>
               )}
-              {fetchingData && !loading && (
+              {fetchingData && (
                 <div>
                   <h1 className="search-title">{`Searching for ${value}`}</h1>
                 </div>
               )}
-              {fetchingData && loading && (
+              {!fetchingData && searchResults && (
                 <div className="search-results">
                   <h1 className="search-title">{`Search Results for "${value}"`}</h1>
                   <span role="button" className="cancel-search-btn" onClick={cancelSearch}>
