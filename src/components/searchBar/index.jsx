@@ -12,8 +12,6 @@ export const SearchBar = ({
   cancelSearch,
   searchResults,
 }) => {
-  console.log(fetchingData, 'hhhhhhh');
-  console.log(loading, fetchingData, 'fecthing dtsate');
   return (
     <>
       <form className="form" onSubmit={onSubmit}>
@@ -37,7 +35,7 @@ export const SearchBar = ({
               )}
               {fetchingData && (
                 <div>
-                  <h1 className="search-title">{`Searching for ${value}`}</h1>
+                  <h1 className="search-title">{`Searching for "${value}"`}</h1>
                 </div>
               )}
               {!fetchingData && searchResults && (

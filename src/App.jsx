@@ -21,6 +21,7 @@ const App = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
+    setNoSearchResults(false);
     setLoadingSearchValue(true);
     setTimeout(() => {
       const allResults = async () => {
@@ -30,10 +31,10 @@ const App = () => {
             if (response.status !== 200) {
               throw new Error('An error occurred with this request');
             }
-            if (response?.data.results.length === 0) {
-              setNoSearchResults(true);
+            if (!response?.data?.results?.length) {
+              setNoSearchResults('No results for this search, please try another keyword.');
             }
-            setSearchResults(response?.data.results.length);
+            setSearchResults(response?.data);
             setData(response?.data.results);
             setLoadingSearchValue(false);
           })
@@ -96,11 +97,7 @@ const App = () => {
                   />
                 ))}
             {error && <h2 style={{ marginTop: '40px' }}>{error}</h2>}
-            {noSearchResults && (
-              <h2 style={{ marginTop: '40px' }}>
-                There are no results for this search, please try another keyword.
-              </h2>
-            )}
+            {noSearchResults && <h2 style={{ marginTop: '25%' }}>{noSearchResults}</h2>}
             {(isLoading || loadingSearchValue) &&
               skeletonLoaderArr.map((item, index) => <SkeletonLoader key={index} />)}
           </div>
